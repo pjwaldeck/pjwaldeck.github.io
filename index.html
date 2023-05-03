@@ -38,8 +38,10 @@ Sound: <input type="checkbox" id="sounds" onclick="toggle_sound()">
         var sParameterName = sURLVariables[i].split('=');
         if (sParameterName[0] == 'start') {
             START_TIME = sParameterName[1];
+	    document.getElementById("start_time").innerHTML = START_TIME
         } else if (sParameterName[0] == 'duration') {
             TIMER_DURATION = sParameterName[1];
+	    document.getElementById("duration").innerHTML = TIMER_DURATION;
 	}	
     }
       return null;
@@ -53,15 +55,14 @@ Sound: <input type="checkbox" id="sounds" onclick="toggle_sound()">
       var f = i[0].slice(0,-2);
       var j = new Date(f + START_TIME)
       var start_ts = Date.parse(j)/1000;
-      document.getElementById("test").innerHTML = start_ts
 
       const timestamp = Date.now() / 1000;
       if (timestamp >= start_ts) {
 	  timeLeft = (TIMER_DURATION) - (Math.round(timestamp)-start_ts) % TIMER_DURATION;
-	  console.log("timestamp: " + timestamp +
-		      ", start_ts: " + start_ts +
-		      ", duration: " + TIMER_DURATION +
-		      ", time left: " + timeLeft);
+//	  console.log("timestamp: " + timestamp +
+//		      ", start_ts: " + start_ts +
+//		      ", duration: " + TIMER_DURATION +
+//		      ", time left: " + timeLeft);
 	  var min = Math.floor(timeLeft/60).toString().padStart(2, '0');
 	  var sec = (timeLeft % 60).toString().padStart(2, '0');
 	  document.getElementById("mytimer").innerHTML = min + " : " + sec;
@@ -80,9 +81,7 @@ Sound: <input type="checkbox" id="sounds" onclick="toggle_sound()">
       }
       }
       
-
-      document.getElementById("curr_ts").innerHTML = Math.round(timestamp);
-      document.getElementById("time_rem").innerHTML = timeLeft;
+      document.getElementById("curr_ts").innerHTML = Date();
       
       const timeCorrection = Math.round(timestamp) - timestamp;
       setTimeout(step, timeCorrection*1000 + 1000);
@@ -104,9 +103,9 @@ Sound: <input type="checkbox" id="sounds" onclick="toggle_sound()">
 <h1>
 <p id="mytimer"></p> 
 </h1>
-start: <p id="test"></p>
+starting at: <p id="start_time"></p>
 current time: <p id="curr_ts"></p>
-time left: <p id="time_rem"></p>
+Duration: <p id="duration"></p> 
 
 </body>
 </html> 
