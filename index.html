@@ -5,10 +5,11 @@
 <h2>Timer</h2>
 
 
-<label for="duration">Set Duration:</label>
-<input type="number" id="duration" name="duration" value=300>
+<!--<label for="duration">Set Duration:</label>
+ <input type="number" id="duration" name="duration" value=300>
 <button onclick="set_duration()">Apply</button>
 <p>
+-->
 Sound: <input type="checkbox" id="sounds" onclick="toggle_sound()">
 
 
@@ -20,7 +21,7 @@ Sound: <input type="checkbox" id="sounds" onclick="toggle_sound()">
   let soundON = false;
 
   function init() {
-      GetURLParameter();
+      GetURLParameters();
       step();
   }
 
@@ -30,21 +31,23 @@ Sound: <input type="checkbox" id="sounds" onclick="toggle_sound()">
   }
 		     
   
-  function  GetURLParameter(){
+  function  GetURLParameters(){
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');
     for (var i = 0; i < sURLVariables.length; i++) {
         var sParameterName = sURLVariables[i].split('=');
         if (sParameterName[0] == 'start') {
             START_TIME = sParameterName[1];
-        }
+        } else if (sParameterName[0] == 'duration') {
+            TIMER_DURATION = sParameterName[1];
+	}	
     }
       return null;
   }
   
   
   function step() {
-      var timeLeft = 1000;
+      var timeLeft;
       var d = new Date();
       var i = d.toString().split(":");
       var f = i[0].slice(0,-2);
@@ -54,7 +57,7 @@ Sound: <input type="checkbox" id="sounds" onclick="toggle_sound()">
 
       const timestamp = Date.now() / 1000;
       if (timestamp >= start_ts) {
-	  timeLeft = (TIMER_DURATION - 1) - (Math.round(timestamp)-start_ts);
+	  timeLeft = (TIMER_DURATION) - (Math.round(timestamp)-start_ts) % TIMER_DURATION;
 	  console.log("timestamp: " + timestamp +
 		      ", start_ts: " + start_ts +
 		      ", duration: " + TIMER_DURATION +
