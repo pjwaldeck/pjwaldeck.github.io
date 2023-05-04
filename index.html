@@ -4,15 +4,7 @@
 
 <h2 style="color:white;">Timer</h2>
 
-
-<!--<label for="duration">Set Duration:</label>
- <input type="number" id="duration" name="duration" value=300>
-<button onclick="set_duration()">Apply</button>
-<p>
--->
 Sound: <input type="checkbox" id="sounds" onclick="toggle_sound()">
-
-
 
 <script>
 
@@ -38,12 +30,13 @@ Sound: <input type="checkbox" id="sounds" onclick="toggle_sound()">
         var sParameterName = sURLVariables[i].split('=');
         if (sParameterName[0] == 'start') {
             START_TIME = sParameterName[1];
-	    document.getElementById("start_time").innerHTML = START_TIME
         } else if (sParameterName[0] == 'duration') {
             TIMER_DURATION = sParameterName[1];
-	    document.getElementById("duration").innerHTML = TIMER_DURATION;
 	}	
     }
+
+      document.getElementById("start_time").innerHTML = START_TIME
+      document.getElementById("duration").innerHTML = TIMER_DURATION;
       return null;
   }
   
@@ -55,19 +48,20 @@ Sound: <input type="checkbox" id="sounds" onclick="toggle_sound()">
       var f = i[0].slice(0,-2);
       var j = new Date(f + START_TIME)
       var start_ts = Date.parse(j)/1000;
-
       const timestamp = Date.now() / 1000;
+      
       if (timestamp >= start_ts) {
 	  timeLeft = (TIMER_DURATION) - (Math.round(timestamp)-start_ts) % TIMER_DURATION;
-//	  console.log("timestamp: " + timestamp +
-//		      ", start_ts: " + start_ts +
-//		      ", duration: " + TIMER_DURATION +
-//		      ", time left: " + timeLeft);
 	  var min = Math.floor(timeLeft/60).toString().padStart(2, '0');
 	  var sec = (timeLeft % 60).toString().padStart(2, '0');
 	  document.getElementById("mytimer").innerHTML = min + " : " + sec;
       }	else {
-	  document.getElementById("mytimer").innerHTML = "Wait"
+	  var time_to_start = Math.round(start_ts-timestamp).toString()
+	  document.getElementById("mytimer").innerHTML = "<span style='color:red;'>" + time_to_start + "</span>";
+	  if ((time_to_start <= 60 && (time_to_start % 5) == 0) || (time_to_start <= 5)) {
+	      let beep = new Audio('beep-07a.mp3');
+	      beep.play();
+	  }
       }
 
       if (soundON) {
@@ -87,14 +81,6 @@ Sound: <input type="checkbox" id="sounds" onclick="toggle_sound()">
       setTimeout(step, timeCorrection*1000 + 1000);
       
 }
-
-  function set_duration() {
-      if (duration.value > 0) {
-	  TIMER_DURATION=duration.value;
-      } else {
-	  TIME_DURATION=1000;
-      }
-  }
   
 </script>
 
