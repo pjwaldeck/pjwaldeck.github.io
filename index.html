@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+<body onload="init()"; style="background-color:black;color:white">
 
-<h2>Timer</h2>
+<h2 style="color:white;">Timer</h2>
 
 
 <!--<label for="duration">Set Duration:</label>
@@ -66,7 +67,7 @@ Sound: <input type="checkbox" id="sounds" onclick="toggle_sound()">
 	  var sec = (timeLeft % 60).toString().padStart(2, '0');
 	  document.getElementById("mytimer").innerHTML = min + " : " + sec;
       }	else {
-	  document.getElementById("mytimer").innerHTML = "Waiting for start..."
+	  document.getElementById("mytimer").innerHTML = "Wait"
       }
 
       if (soundON) {
@@ -99,6 +100,7 @@ Sound: <input type="checkbox" id="sounds" onclick="toggle_sound()">
 
 
 
+<h1 style="font-size:30vw;color=white;margin-bottom:0:margin-top:0">
 <p id="mytimer"></p> 
 </h1>
 starting at: <p id="start_time"></p>
